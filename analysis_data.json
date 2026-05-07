@@ -1,0 +1,321 @@
+{
+  "step1": {
+    "total_records": 8615,
+    "columns": [
+      "InvoiceNo",
+      "Description",
+      "Quantity",
+      "UnitPrice",
+      "CustomerID",
+      "InvoiceDate",
+      "Country"
+    ],
+    "missing_values": {
+      "InvoiceNo": 0,
+      "Description": 0,
+      "Quantity": 0,
+      "UnitPrice": 0,
+      "CustomerID": 0,
+      "InvoiceDate": 0,
+      "Country": 0
+    },
+    "unique_invoices": 3000,
+    "unique_products": 202,
+    "unique_customers": 15,
+    "unique_countries": 13
+  },
+  "step2": {
+    "records_before_cleaning": 8615,
+    "records_after_cleaning": 8615,
+    "num_transactions": 3000,
+    "avg_items_per_transaction": 2.87,
+    "max_items": 5,
+    "min_items": 1,
+    "num_unique_products": 202,
+    "top_15_products": {
+      "C": 584,
+      "L": 369,
+      "P": 340,
+      "S": 308,
+      "M": 261,
+      "T": 237,
+      "W": 191,
+      "J": 187,
+      "I": 110,
+      "B": 103,
+      "R": 96,
+      "D": 59,
+      "V": 55,
+      "G": 46,
+      "SET OF 6 SPICE TINS SKETCHBOOK": 45
+    }
+  },
+  "step3": {
+    "min_support": 0.02,
+    "min_confidence": 0.3,
+    "algorithm": "Apriori",
+    "frequent_itemsets_count": 17,
+    "frequent_itemsets_by_size": {
+      "1": 11,
+      "2": 6
+    },
+    "rules_count": 11,
+    "frequent_itemsets_detail": [
+      {
+        "items": [
+          "C"
+        ],
+        "support": 0.1147
+      },
+      {
+        "items": [
+          "T"
+        ],
+        "support": 0.079
+      },
+      {
+        "items": [
+          "S"
+        ],
+        "support": 0.0787
+      },
+      {
+        "items": [
+          "L"
+        ],
+        "support": 0.077
+      },
+      {
+        "items": [
+          "P"
+        ],
+        "support": 0.067
+      },
+      {
+        "items": [
+          "T",
+          "C"
+        ],
+        "support": 0.0557
+      },
+      {
+        "items": [
+          "J"
+        ],
+        "support": 0.0503
+      },
+      {
+        "items": [
+          "M"
+        ],
+        "support": 0.0447
+      },
+      {
+        "items": [
+          "W"
+        ],
+        "support": 0.035
+      },
+      {
+        "items": [
+          "B"
+        ],
+        "support": 0.0343
+      },
+      {
+        "items": [
+          "J",
+          "L"
+        ],
+        "support": 0.0343
+      },
+      {
+        "items": [
+          "S",
+          "J"
+        ],
+        "support": 0.0327
+      },
+      {
+        "items": [
+          "R"
+        ],
+        "support": 0.032
+      },
+      {
+        "items": [
+          "B",
+          "T"
+        ],
+        "support": 0.031
+      },
+      {
+        "items": [
+          "R",
+          "C"
+        ],
+        "support": 0.0307
+      },
+      {
+        "items": [
+          "P",
+          "M"
+        ],
+        "support": 0.028
+      },
+      {
+        "items": [
+          "I"
+        ],
+        "support": 0.0213
+      }
+    ],
+    "rules_stats": {
+      "support_range": [
+        0.028,
+        0.0557
+      ],
+      "confidence_range": [
+        0.3924,
+        0.9583
+      ],
+      "lift_range": [
+        6.1451,
+        11.4293
+      ],
+      "avg_lift": 8.7669
+    },
+    "top_rules": [
+      {
+        "antecedents": "B",
+        "consequents": "T",
+        "support": 0.031,
+        "confidence": 0.9029,
+        "lift": 11.4293
+      },
+      {
+        "antecedents": "T",
+        "consequents": "B",
+        "support": 0.031,
+        "confidence": 0.3924,
+        "lift": 11.4293
+      },
+      {
+        "antecedents": "P",
+        "consequents": "M",
+        "support": 0.028,
+        "confidence": 0.4179,
+        "lift": 9.3562
+      },
+      {
+        "antecedents": "M",
+        "consequents": "P",
+        "support": 0.028,
+        "confidence": 0.6269,
+        "lift": 9.3562
+      },
+      {
+        "antecedents": "J",
+        "consequents": "L",
+        "support": 0.0343,
+        "confidence": 0.6821,
+        "lift": 8.8587
+      },
+      {
+        "antecedents": "L",
+        "consequents": "J",
+        "support": 0.0343,
+        "confidence": 0.4459,
+        "lift": 8.8587
+      },
+      {
+        "antecedents": "R",
+        "consequents": "C",
+        "support": 0.0307,
+        "confidence": 0.9583,
+        "lift": 8.3576
+      },
+      {
+        "antecedents": "S",
+        "consequents": "J",
+        "support": 0.0327,
+        "confidence": 0.4153,
+        "lift": 8.2501
+      },
+      {
+        "antecedents": "J",
+        "consequents": "S",
+        "support": 0.0327,
+        "confidence": 0.649,
+        "lift": 8.2501
+      },
+      {
+        "antecedents": "C",
+        "consequents": "T",
+        "support": 0.0557,
+        "confidence": 0.4855,
+        "lift": 6.1451
+      },
+      {
+        "antecedents": "T",
+        "consequents": "C",
+        "support": 0.0557,
+        "confidence": 0.7046,
+        "lift": 6.1451
+      }
+    ],
+    "top_double_itemsets": [
+      {
+        "items": "T + C",
+        "support": 0.0557
+      },
+      {
+        "items": "J + L",
+        "support": 0.0343
+      },
+      {
+        "items": "S + J",
+        "support": 0.0327
+      },
+      {
+        "items": "B + T",
+        "support": 0.031
+      },
+      {
+        "items": "R + C",
+        "support": 0.0307
+      },
+      {
+        "items": "P + M",
+        "support": 0.028
+      }
+    ],
+    "top_triple_itemsets": []
+  },
+  "step4_charts": [
+    [
+      "商品购买频率 Top 15",
+      "chart1_top_products.png"
+    ],
+    [
+      "频繁项集 Top 15",
+      "chart2_frequent_itemsets.png"
+    ],
+    [
+      "关联规则网络图",
+      "chart3_rules_network.png"
+    ],
+    [
+      "支持度-置信度散点图",
+      "chart4_support_confidence.png"
+    ],
+    [
+      "提升度分布直方图",
+      "chart5_lift_distribution.png"
+    ],
+    [
+      "项集大小-支持度分布",
+      "chart6_itemset_size_support.png"
+    ]
+  ]
+}
