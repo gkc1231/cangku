@@ -12,16 +12,26 @@ const Navigation: React.FC = () => {
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50">
       <div className="container py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/profile" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg">
-              <span className="text-xl">🐼</span>
+              <span className="text-xl">👨‍💻</span>
             </div>
             <span className="text-xl font-bold text-gradient font-display">
-              Pandas学习
+              个人主页
             </span>
           </Link>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
+            <Link 
+              to="/profile" 
+              className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+                isActive('/profile') 
+                  ? 'bg-primary-100 text-primary-700' 
+                  : 'text-dark-600 hover:bg-slate-100 hover:text-dark-800'
+              }`}
+            >
+              个人主页
+            </Link>
             <Link 
               to="/" 
               className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
@@ -30,7 +40,7 @@ const Navigation: React.FC = () => {
                   : 'text-dark-600 hover:bg-slate-100 hover:text-dark-800'
               }`}
             >
-              首页
+              项目
             </Link>
             <Link 
               to="/resources" 
@@ -40,7 +50,7 @@ const Navigation: React.FC = () => {
                   : 'text-dark-600 hover:bg-slate-100 hover:text-dark-800'
               }`}
             >
-              学习资源
+              资源
             </Link>
           </div>
         </div>
