@@ -32,35 +32,33 @@ class PyodideRunner {
     }
 
     try {
-      // 清空之前的结果
-      const resultsDiv = document.getElementById('results');
-      if (resultsDiv) {
-        resultsDiv.innerHTML = '';
-      }
-
-      // 使用Pyodide的stdout/stderr来捕获输出
       let output = '';
       
       // 设置stdout
       this.pyodide.setStdout({
         batched: (text) => {
-          output += text + '\n';
+          output += text;
         }
       });
       
       this.pyodide.setStderr({
         batched: (text) => {
-          output += text + '\n';
+          output += text;
         }
       });
 
-      // 执行代码
+      // 直接执行代码
       await this.pyodide.runPythonAsync(code);
       
       return { success: true, result: output };
     } catch (error) {
       console.error('执行错误:', error);
-      return { success: false, error: error.message };
+      let errorMsg = error.message;
+      // 如果是完整的错误堆栈，取前几行
+      if (error.stack) {
+        errorMsg = error.stack;
+      }
+      return { success: false, error: errorMsg };
     }
   }
 

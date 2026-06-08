@@ -26,28 +26,16 @@ export const projects: Project[] = [
     difficulty: '入门',
     concepts: ['pd.read_csv()', 'DataFrame.head()', 'DataFrame.info()', 'DataFrame.describe()'],
     code: `import pandas as pd
+import sys
 
-# 创建示例数据
-data = {
-    '姓名': ['张三', '李四', '王五', '赵六', '钱七'],
-    '年龄': [25, 30, 28, 35, 27],
-    '城市': ['北京', '上海', '深圳', '广州', '杭州'],
-    '薪资': [15000, 20000, 18000, 25000, 16000]
-}
+print("Hello, Pandas!")
+print("Python version:", sys.version)
 
+# 创建简单数据
+data = {'a': [1, 2, 3, 4, 5]}
 df = pd.DataFrame(data)
-
-# 查看数据前几行
-print("=== 数据预览 ===")
-print(df.head())
-
-# 查看数据基本信息
-print("\n=== 数据信息 ===")
-print(df.info())
-
-# 查看数值列的统计信息
-print("\n=== 数值统计 ===")
-print(df.describe())`,
+print("\nDataFrame:")
+print(df)`,
     sampleOutput: `=== 数据预览 ===
      姓名  年龄  城市     薪资
 0  张三  25  北京  15000
