@@ -64,36 +64,33 @@ class PyodideRunner {
         errorMsg = String(error);
       }
       
-      // 简单处理：只保留最后包含Error/Exception的行
       const lines = errorMsg.split('\n');
-      let finalError = '';
+      const errorLines = [];
       
-      // 从后往前找，找到第一个包含Error或Exception的行
-      for (let i = lines.length - 1; i >= 0; i--) {
+      // 收集有用的错误信息
+      for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-        if (line.match(/Error|Exception/)) {
-          finalError = line;
-          break;
+        
+        // 跳过空行和pyodide内部信息
+        if (!line || line.includes('pyodide') || line.includes('lib/python')) {
+          continue;
+        }
+        
+        // 保留用户代码位置、错误类型、和^指向的行
+        if (line.startsWith('File "<exec>"') || 
+            line.match(/Error|Exception/) ||
+            line.match(/^\^+$/)) {
+          errorLines.push(line);
+          continue;
+        }
+        
+        // 保留紧接在File "<exec>"后面的代码行
+        if (i > 0 && lines[i-1].trim().startsWith('File "<exec>"')) {
+          errorLines.push(line);
         }
       }
       
-      // 如果没找到，找包含File "<exec>"的行
-      if (!finalError) {
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i].trim();
-          if (line.startsWith('File "<exec>"')) {
-            finalError = line;
-            // 同时保留后面的代码行和错误行
-            for (let j = i + 1; j < lines.length && j < i + 3; j++) {
-              const nextLine = lines[j].trim();
-              if (nextLine && !nextLine.includes('lib/python') && !nextLine.includes('pyodide')) {
-                finalError += '\n' + nextLine;
-              }
-            }
-            break;
-          }
-        }
-      }
+      let finalError = errorLines.join('\n').trim();
       
       return { success: false, error: finalError || '代码执行出错，请检查语法' };
     }
