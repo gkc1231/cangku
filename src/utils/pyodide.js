@@ -12,50 +12,16 @@ class PyodideRunner {
     }
 
     try {
-      console.log('Loading Pyodide...');
       this.pyodide = await loadPyodide({
-        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/",
-        stdout: (text) => console.log(text),
-        stderr: (text) => console.error(text),
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
       });
 
-      console.log('Loading packages...');
-      await this.pyodide.loadPackage(["pandas", "numpy", "micropip"]);
-      
-      console.log('Configuring environment...');
-      this.pyodide.runPython(`
-        import sys
-        import io
-        import pandas as pd
-        import numpy as np
-        
-        # 设置标准输出编码为UTF-8
-        sys.stdout.reconfigure(encoding='utf-8')
-        sys.stderr.reconfigure(encoding='utf-8')
-        
-        # 创建一个全局变量用于存储输出
-        output_buffer = []
-        
-        # 自定义print函数
-        def custom_print(*args, sep=' ', end='\\n'):
-            try:
-                output = sep.join(str(arg) for arg in args) + end
-                output_buffer.append(output)
-                # 也输出到浏览器控制台
-                from js import console
-                console.log(output)
-            except Exception as e:
-                output_buffer.append(f"Error in print: {str(e)}\\n")
-        
-        # 替换内置print
-        import builtins
-        builtins.print = custom_print
-      `);
+      await this.pyodide.loadPackage(["pandas", "numpy"]);
 
       this.isInitialized = true;
-      console.log('Pyodide initialized successfully');
+      console.log('Python环境初始化完成');
     } catch (error) {
-      console.error('Error initializing Pyodide:', error);
+      console.error('初始化错误:', error);
       throw error;
     }
   }
@@ -72,22 +38,28 @@ class PyodideRunner {
         resultsDiv.innerHTML = '';
       }
 
-      // 清空输出缓冲区
-      this.pyodide.runPython(`
-        output_buffer.clear()
-      `);
+      // 使用Pyodide的stdout/stderr来捕获输出
+      let output = '';
+      
+      // 设置stdout
+      this.pyodide.setStdout({
+        batched: (text) => {
+          output += text + '\n';
+        }
+      });
+      
+      this.pyodide.setStderr({
+        batched: (text) => {
+          output += text + '\n';
+        }
+      });
 
-      // 执行用户代码
-      const result = await this.pyodide.runPythonAsync(code);
+      // 执行代码
+      await this.pyodide.runPythonAsync(code);
       
-      // 获取输出
-      const output = await this.pyodide.runPythonAsync(`
-        ''.join(output_buffer)
-      `);
-      
-      return { success: true, result: output || '' };
+      return { success: true, result: output };
     } catch (error) {
-      console.error('Error running code:', error);
+      console.error('执行错误:', error);
       return { success: false, error: error.message };
     }
   }
@@ -101,11 +73,11 @@ class PyodideRunner {
       const result = await this.pyodide.runPythonAsync(`
         import pandas as pd
         df = pd.read_csv('${url}')
-        df
+        print(df)
       `);
       return result;
     } catch (error) {
-      console.error('Error loading CSV:', error);
+      console.error('加载CSV错误:', error);
       throw error;
     }
   }

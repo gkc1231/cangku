@@ -38,39 +38,25 @@ const ProjectDetail = () => {
   }
 
   const handleRunCode = async () => {
-    if (isRunning || isInitializing) return;
+    if (isRunning) return;
     
     setIsRunning(true);
     setShowOutput(true);
-    setOutput('');
+    setOutput('正在初始化Python环境...\n（首次加载可能需要10-20秒）\n\n');
     
     try {
-      // 初始化Pyodide
-      if (!pyodideRunner.isInitialized) {
-        setIsInitializing(true);
-        setOutput('正在初始化Python环境...\n');
-        await pyodideRunner.initialize();
-        setIsInitializing(false);
-        setOutput('Python环境初始化完成！\n\n');
-      }
+      await pyodideRunner.initialize();
+      setOutput('Python环境加载成功！正在执行代码...\n\n');
       
-      setOutput(prev => prev + '正在执行代码...\n\n');
+      const result = await pyodideRunner.runCode(project.code);
       
-      // 创建结果容器
-      if (resultsRef.current) {
-        resultsRef.current.innerHTML = '';
-      }
-      
-      // 执行代码
-      const codeResult = await pyodideRunner.runCode(project.code);
-      
-      if (codeResult.success) {
-        setOutput(codeResult.result || '执行完成！');
+      if (result.success) {
+        setOutput(result.result || '执行完成！');
       } else {
-        setOutput('执行错误: ' + codeResult.error);
+        setOutput('执行错误: ' + result.error);
       }
     } catch (error) {
-      setOutput('错误: ' + error.message);
+      setOutput('错误: ' + (error as Error).message);
     } finally {
       setIsRunning(false);
     }
