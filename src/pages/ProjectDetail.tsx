@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projects } from '../data/projects';
-import { ArrowLeft, Play, BookOpen, Lightbulb } from 'lucide-react';
+import { ArrowLeft, Play, BookOpen, Lightbulb, CheckCircle2, XCircle, HelpCircle } from 'lucide-react';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [showOutput, setShowOutput] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
   
   const project = projects.find(p => p.id === parseInt(id || '1'));
 
@@ -48,6 +52,32 @@ const ProjectDetail = () => {
       default:
         return 'bg-gray-100 text-gray-800';
     }
+  };
+
+  const handleOptionSelect = (option: string) => {
+    if (answered) return;
+    setSelectedOption(option);
+  };
+
+  const handleSubmitAnswer = () => {
+    if (!selectedOption || !project?.quiz) return;
+    setAnswered(true);
+    if (selectedOption === project.quiz.questions[currentQuestion].answer) {
+      setScore(prev => prev + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    setCurrentQuestion(prev => prev + 1);
+    setSelectedOption(null);
+    setAnswered(false);
+  };
+
+  const handleResetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedOption(null);
+    setAnswered(false);
+    setScore(0);
   };
 
   return (
@@ -177,6 +207,162 @@ const ProjectDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* 题目测试 */}
+        {project.quiz && (
+          <div className="mt-12">
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                  <HelpCircle className="w-6 h-6 text-blue-600" />
+                  项目测试
+                </h3>
+                <div className="flex items-center gap-4">
+                  <span className="text-lg font-medium text-gray-700">
+                    得分: {score}/{project.quiz.questions.length}
+                  </span>
+                  <button
+                    onClick={handleResetQuiz}
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    重新开始
+                  </button>
+                </div>
+              </div>
+
+              {currentQuestion < project.quiz.questions.length ? (
+                <div className="space-y-6">
+                  {/* 进度条 */}
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${((currentQuestion + 1) / project.quiz.questions.length) * 100}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-sm text-gray-500 text-right">
+                    第 {currentQuestion + 1} 题 / 共 {project.quiz.questions.length} 题
+                  </div>
+
+                  {/* 题目 */}
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
+                    <h4 className="text-xl font-semibold text-gray-900 mb-6">
+                      {project.quiz.questions[currentQuestion].question}
+                    </h4>
+
+                    {/* 选项 */}
+                    <div className="space-y-3">
+                      {project.quiz.questions[currentQuestion].options.map((option, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleOptionSelect(option)}
+                          disabled={answered}
+                          className={`w-full text-left px-6 py-4 rounded-xl border-2 transition-all duration-200 ${
+                            selectedOption === option
+                              ? answered
+                                ? option === project.quiz.questions[currentQuestion].answer
+                                  ? 'border-green-500 bg-green-50'
+                                  : 'border-red-500 bg-red-50'
+                                : 'border-blue-500 bg-blue-50'
+                              : 'border-gray-200 bg-white hover:border-gray-300'
+                          } ${answered ? 'cursor-default' : 'cursor-pointer'}`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium text-gray-900">{option}</span>
+                            {answered && (
+                              option === project.quiz.questions[currentQuestion].answer ? (
+                                <CheckCircle2 className="w-6 h-6 text-green-500" />
+                              ) : selectedOption === option ? (
+                                <XCircle className="w-6 h-6 text-red-500" />
+                              ) : null
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* 答案反馈 */}
+                    {answered && (
+                      <div className={`mt-6 p-4 rounded-xl ${
+                        selectedOption === project.quiz.questions[currentQuestion].answer
+                          ? 'bg-green-50 border border-green-200'
+                          : 'bg-red-50 border border-red-200'
+                      }`}>
+                        <div className="flex items-start gap-3">
+                          {selectedOption === project.quiz.questions[currentQuestion].answer ? (
+                            <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                          ) : (
+                            <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                          )}
+                          <div>
+                            <p className={`font-semibold mb-2 ${
+                              selectedOption === project.quiz.questions[currentQuestion].answer
+                                ? 'text-green-800'
+                                : 'text-red-800'
+                            }`}>
+                              {selectedOption === project.quiz.questions[currentQuestion].answer
+                                ? '回答正确！'
+                                : '回答错误'}
+                            </p>
+                            <p className="text-gray-700">
+                              {project.quiz.questions[currentQuestion].explanation}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 操作按钮 */}
+                    <div className="mt-6 flex justify-end gap-4">
+                      {!answered ? (
+                        <button
+                          onClick={handleSubmitAnswer}
+                          disabled={!selectedOption}
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          提交答案
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleNextQuestion}
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                        >
+                          {currentQuestion < project.quiz.questions.length - 1 ? '下一题' : '完成'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* 完成界面 */
+                <div className="text-center py-12">
+                  <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-8">
+                    <CheckCircle2 className="w-12 h-12 text-white" />
+                  </div>
+                  <h4 className="text-3xl font-bold text-gray-900 mb-4">
+                    测试完成！
+                  </h4>
+                  <p className="text-xl text-gray-600 mb-8">
+                    你答对了 <span className="font-bold text-blue-600">{score}</span> 题 / 共 {project.quiz.questions.length} 题
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={handleResetQuiz}
+                      className="bg-white border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all"
+                    >
+                      重新测试
+                    </button>
+                    <Link
+                      to="/"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                    >
+                      返回首页
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Navigation */}
         <div className="mt-12 flex items-center justify-between">

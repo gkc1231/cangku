@@ -8,6 +8,14 @@ export interface Project {
   code: string;
   sampleOutput: string;
   explanation: string;
+  quiz?: {
+    questions: Array<{
+      question: string;
+      options: string[];
+      answer: string;
+      explanation: string;
+    }>;
+  };
 }
 
 export const projects: Project[] = [
@@ -67,7 +75,41 @@ min     25.000000  15000.000000
 50%     28.000000  18000.000000
 75%     30.000000  20000.000000
 max     35.000000  25000.000000`,
-    explanation: '本项目介绍了pandas最基础的操作：如何创建DataFrame、查看数据的基本信息和统计摘要。'
+    explanation: '本项目介绍了pandas最基础的操作：如何创建DataFrame、查看数据的基本信息和统计摘要。',
+    quiz: {
+      questions: [
+        {
+          question: '在pandas中，用于读取CSV文件的函数是？',
+          options: ['pd.read_csv()', 'pd.read_excel()', 'pd.read_json()', 'pd.read_sql()'],
+          answer: 'pd.read_csv()',
+          explanation: 'pd.read_csv()是pandas专门用于读取CSV格式文件的函数，这是最常用的数据读取方法之一。'
+        },
+        {
+          question: '查看DataFrame前几行数据的方法是？',
+          options: ['df.tail()', 'df.head()', 'df.first()', 'df.show()'],
+          answer: 'df.head()',
+          explanation: 'df.head()方法默认显示DataFrame的前5行数据，可以传入参数指定显示的行数。'
+        },
+        {
+          question: '获取DataFrame形状（行数和列数）的属性是？',
+          options: ['df.size', 'df.shape', 'df.length', 'df.dimensions'],
+          answer: 'df.shape',
+          explanation: 'df.shape返回一个元组，包含DataFrame的行数和列数，格式为(行数, 列数)。'
+        },
+        {
+          question: '获取DataFrame统计描述的方法是？',
+          options: ['df.summary()', 'df.stats()', 'df.describe()', 'df.analyze()'],
+          answer: 'df.describe()',
+          explanation: 'df.describe()方法返回数值型列的统计信息，包括计数、平均值、标准差、最小值、25%、50%、75%分位数和最大值。'
+        },
+        {
+          question: '创建DataFrame的正确方式是？',
+          options: ['df = pd.DataFrame()', 'df = new DataFrame()', 'df = DataFrame.create()', 'df = pd.createFrame()'],
+          answer: 'pd.DataFrame()',
+          explanation: '在pandas中，使用pd.DataFrame()函数来创建DataFrame对象。'
+        }
+      ]
+    }
   },
   {
     id: 2,
@@ -145,7 +187,41 @@ dtype: int64
 1    B   NaN   200
 3    C  20.0   300
 5    D  25.0   400`,
-    explanation: '本项目展示了实际数据分析中最常见的预处理操作：处理缺失值和重复值。'
+    explanation: '本项目展示了实际数据分析中最常见的预处理操作：处理缺失值和重复值。',
+    quiz: {
+      questions: [
+        {
+          question: '在pandas中，用于填充缺失值的方法是？',
+          options: ['df.fillna()', 'df.dropna()', 'df.replace()', 'df.fill()'],
+          answer: 'df.fillna()',
+          explanation: 'df.fillna()方法用于填充DataFrame中的缺失值，可以指定填充的值或使用统计量如mean()、median()等。'
+        },
+        {
+          question: '用于删除重复行的方法是？',
+          options: ['df.remove_duplicates()', 'df.drop_duplicates()', 'df.delete_duplicates()', 'df.clean_duplicates()'],
+          answer: 'df.drop_duplicates()',
+          explanation: 'df.drop_duplicates()方法用于删除DataFrame中的重复行，可以指定subset参数来考虑特定的列。'
+        },
+        {
+          question: '检查缺失值的方法是？',
+          options: ['df.isna()', 'df.check_null()', 'df.missing()', 'df.nan()'],
+          answer: 'df.isna()',
+          explanation: 'df.isna()或df.isnull()用于检查DataFrame中的缺失值，返回布尔值矩阵。'
+        },
+        {
+          question: '在numpy中，表示缺失值的是？',
+          options: ['None', 'NaN', 'Null', 'Missing'],
+          answer: 'NaN',
+          explanation: '在numpy和pandas中，NaN（Not a Number）用于表示缺失的数值，np.nan是缺失值的标准表示。'
+        },
+        {
+          question: '删除含有缺失值的行的方法是？',
+          options: ['df.dropna()', 'df.fillna()', 'df.remove_na()', 'df.clean_na()'],
+          answer: 'df.dropna()',
+          explanation: 'df.dropna()方法用于删除含有缺失值的行或列，可以通过参数指定删除的条件。'
+        }
+      ]
+    }
   },
   {
     id: 3,
@@ -214,7 +290,41 @@ C    3000.000000  30.00
 3月  A      1200    12.00
      B      1800    18.00
      C      3000    30.00`,
-    explanation: 'groupby是pandas中最强大的功能之一，用于对数据进行分组和聚合分析。'
+    explanation: 'groupby是pandas中最强大的功能之一，用于对数据进行分组和聚合分析。',
+    quiz: {
+      questions: [
+        {
+          question: '在pandas中，用于数据分组的方法是？',
+          options: ['df.group()', 'df.groupby()', 'df.aggregate()', 'df.segment()'],
+          answer: 'df.groupby()',
+          explanation: 'df.groupby()是pandas中用于数据分组的核心方法，可以按一个或多个列进行分组。'
+        },
+        {
+          question: '用于同时计算多个统计量的方法是？',
+          options: ['df.mean()', 'df.sum()', 'df.agg()', 'df.stats()'],
+          answer: 'df.agg()',
+          explanation: 'df.agg()方法可以同时应用多个聚合函数，如mean、sum、count等。'
+        },
+        {
+          question: '按多个列分组的正确写法是？',
+          options: ['df.groupby(col1, col2)', 'df.groupby([col1, col2])', 'df.groupby(col1 + col2)', 'df.groupby(col1, col2)'],
+          answer: 'df.groupby([col1, col2])',
+          explanation: '需要将多个列名放在一个列表中作为groupby的参数，如groupby([col1, col2])。'
+        },
+        {
+          question: 'groupby后直接调用mean()会？',
+          options: ['计算所有数值列的平均值', '计算第一列的平均值', '只计算分组键的平均值', '报错'],
+          answer: '计算所有数值列的平均值',
+          explanation: 'groupby后直接调用聚合函数会自动对所有数值类型的列进行计算。'
+        },
+        {
+          question: '计算分组求和的方法是？',
+          options: ['df.groupby().sum()', 'df.groupby().total()', 'df.groupby().add()', 'df.groupby().aggregate()'],
+          answer: 'df.groupby().sum()',
+          explanation: 'sum()是最常用的聚合函数之一，用于计算分组数据的总和。'
+        }
+      ]
+    }
   },
   {
     id: 4,
@@ -282,7 +392,41 @@ print(df[['销售额', '增长率']].head(10))`,
 2024-01-02   156      -54.385965
 2024-01-03   489      213.461538
 ...`,
-    explanation: '时间序列分析是数据分析中的重要领域，本项目介绍了基本的时序处理方法。'
+    explanation: '时间序列分析是数据分析中的重要领域，本项目介绍了基本的时序处理方法。',
+    quiz: {
+      questions: [
+        {
+          question: '解析日期字符串的函数是？',
+          options: ['pd.to_datetime()', 'pd.date()', 'pd.parse_date()', 'pd.convert_date()'],
+          answer: 'pd.to_datetime()',
+          explanation: 'pd.to_datetime()用于将字符串或其他格式解析为datetime对象。'
+        },
+        {
+          question: '时间序列重采样的方法是？',
+          options: ['resample()', 'sample()', 'frequency()', 'time()'],
+          answer: 'resample()',
+          explanation: 'resample()方法用于改变时间序列的频率，如从日数据转换为月数据。'
+        },
+        {
+          question: '计算滚动窗口统计的方法是？',
+          options: ['rolling()', 'window()', 'slide()', 'move()'],
+          answer: 'rolling()',
+          explanation: 'rolling()方法用于创建滚动窗口对象，然后可以应用聚合函数。'
+        },
+        {
+          question: '创建日期范围的函数是？',
+          options: ['pd.date_range()', 'pd.range()', 'pd.date()', 'pd.sequence()'],
+          answer: 'pd.date_range()',
+          explanation: 'pd.date_range()用于创建一个日期范围序列，可以指定开始、结束和频率。'
+        },
+        {
+          question: '按周重采样的频率代码是？',
+          options: ['W', 'D', 'M', 'Y'],
+          answer: 'W',
+          explanation: 'W表示周频率，D表示天，M表示月，Y表示年。'
+        }
+      ]
+    }
   },
   {
     id: 5,
@@ -362,7 +506,41 @@ print(outer)`,
 4       5 钱七   B   NaN   NaN
 5       6  NaN  NaN  88.0  92.0
 6       7  NaN  NaN  95.0  88.0`,
-    explanation: '数据合并是处理多表关联数据的核心技能，本项目展示了不同类型的连接操作。'
+    explanation: '数据合并是处理多表关联数据的核心技能，本项目展示了不同类型的连接操作。',
+    quiz: {
+      questions: [
+        {
+          question: '用于数据合并的函数是？',
+          options: ['pd.merge()', 'pd.concat()', 'pd.join()', 'pd.connect()'],
+          answer: 'pd.merge()',
+          explanation: 'pd.merge()用于根据一个或多个键连接两个DataFrame，类似于SQL中的JOIN操作。'
+        },
+        {
+          question: '内连接的参数值是？',
+          options: ['inner', 'outer', 'left', 'right'],
+          answer: 'inner',
+          explanation: 'inner连接只保留在两个DataFrame中都存在的键，是默认的连接类型。'
+        },
+        {
+          question: '只保留左表所有数据的连接类型是？',
+          options: ['left', 'right', 'inner', 'outer'],
+          answer: 'left',
+          explanation: 'left连接保留左表的所有行，右表中匹配不到的部分用NaN填充。'
+        },
+        {
+          question: '用于数据拼接的函数是？',
+          options: ['pd.concat()', 'pd.merge()', 'pd.join()', 'pd.append()'],
+          answer: 'pd.concat()',
+          explanation: 'pd.concat()用于沿行或列拼接多个DataFrame，而不是基于键连接。'
+        },
+        {
+          question: '指定连接键的参数是？',
+          options: ['on', 'key', 'by', 'using'],
+          answer: 'on',
+          explanation: 'on参数用于指定连接的键，两个DataFrame必须有相同名称的列。'
+        }
+      ]
+    }
   },
   {
     id: 6,
@@ -431,7 +609,41 @@ print(df_scaled[numerical_cols])`,
 2 -0.34816  -0.08967  -0.04655 -0.34816
 3 -0.87039  -0.62868 -0.65167  0.34816
 4  1.21655   1.21728   0.93095 -0.34816`,
-    explanation: '特征工程是机器学习中的关键步骤，好的特征可以显著提升模型效果。'
+    explanation: '特征工程是机器学习中的关键步骤，好的特征可以显著提升模型效果。',
+    quiz: {
+      questions: [
+        {
+          question: '进行独热编码的函数是？',
+          options: ['pd.get_dummies()', 'pd.one_hot()', 'pd.encode()', 'pd.dummies()'],
+          answer: 'pd.get_dummies()',
+          explanation: 'pd.get_dummies()用于将分类变量转换为独热编码（dummy variables）。'
+        },
+        {
+          question: '将数据分箱的函数是？',
+          options: ['pd.cut()', 'pd.bin()', 'pd.split()', 'pd.divide()'],
+          answer: 'pd.cut()',
+          explanation: 'pd.cut()用于将连续数值数据分割成离散的区间（分箱）。'
+        },
+        {
+          question: 'sklearn中用于标准化的类是？',
+          options: ['StandardScaler', 'MinMaxScaler', 'Normalizer', 'Scaler'],
+          answer: 'StandardScaler',
+          explanation: 'StandardScaler实现Z-score标准化，将数据转换为均值为0、标准差为1的分布。'
+        },
+        {
+          question: '特征工程的主要目的是？',
+          options: ['创建更有意义的特征', '删除无用特征', '增加数据量', '提高运算速度'],
+          answer: '创建更有意义的特征',
+          explanation: '特征工程的核心是通过转换、组合原始数据，创建更能表达数据模式的新特征。'
+        },
+        {
+          question: '处理类别型特征的常用方法是？',
+          options: ['独热编码', '标准化', '归一化', '删除'],
+          answer: '独热编码',
+          explanation: '独热编码是处理类别型特征最常用的方法，可以避免引入不必要的顺序关系。'
+        }
+      ]
+    }
   },
   {
     id: 7,
@@ -503,7 +715,41 @@ print("\n图表已生成！")`,
 5  6月    36   295    106
 
 图表已生成！`,
-    explanation: '数据可视化是数据分析师最重要的技能之一，本项目展示了多种常用图表的创建方法。'
+    explanation: '数据可视化是数据分析师最重要的技能之一，本项目展示了多种常用图表的创建方法。',
+    quiz: {
+      questions: [
+        {
+          question: '创建折线图的matplotlib函数是？',
+          options: ['plt.plot()', 'plt.line()', 'plt.lineplot()', 'plt.draw()'],
+          answer: 'plt.plot()',
+          explanation: 'plt.plot()是matplotlib中用于创建折线图的基本函数。'
+        },
+        {
+          question: '创建柱状图的matplotlib函数是？',
+          options: ['plt.bar()', 'plt.column()', 'plt.histogram()', 'plt.chart()'],
+          answer: 'plt.bar()',
+          explanation: 'plt.bar()是matplotlib中用于创建柱状图的函数。'
+        },
+        {
+          question: '创建散点图的函数是？',
+          options: ['plt.scatter()', 'plt.dot()', 'plt.point()', 'plt.bubble()'],
+          answer: 'plt.scatter()',
+          explanation: 'plt.scatter()用于创建散点图，展示两个变量之间的关系。'
+        },
+        {
+          question: '选择合适的图表类型很重要，展示趋势通常用？',
+          options: ['折线图', '饼图', '散点图', '热力图'],
+          answer: '折线图',
+          explanation: '折线图最适合展示数据随时间变化的趋势。'
+        },
+        {
+          question: '展示占比关系通常用？',
+          options: ['饼图', '折线图', '散点图', '箱线图'],
+          answer: '饼图',
+          explanation: '饼图最适合展示各部分占整体的比例关系。'
+        }
+      ]
+    }
   },
   {
     id: 8,
@@ -588,7 +834,41 @@ print(df[['评论内容', '情感分类']].value_counts())`,
 中性    2
 负面    2
 Name: count, dtype: int64`,
-    explanation: '文本数据处理是数据分析的重要领域，本项目展示了基本的文本分析方法。'
+    explanation: '文本数据处理是数据分析的重要领域，本项目展示了基本的文本分析方法。',
+    quiz: {
+      questions: [
+        {
+          question: '检查字符串是否包含子串的方法是？',
+          options: ['str.contains()', 'str.find()', 'str.match()', 'str.search()'],
+          answer: 'str.contains()',
+          explanation: 'str.contains()用于检查Series中的字符串是否包含指定的子串。'
+        },
+        {
+          question: '获取字符串长度的方法是？',
+          options: ['str.len()', 'str.length()', 'str.size()', 'str.count()'],
+          answer: 'str.len()',
+          explanation: 'str.len()用于计算Series中每个字符串的长度。'
+        },
+        {
+          question: '统计子串出现次数的方法是？',
+          options: ['str.count()', 'str.frequency()', 'str.number()', 'str.times()'],
+          answer: 'str.count()',
+          explanation: 'str.count()用于统计每个字符串中指定子串出现的次数。'
+        },
+        {
+          question: 'Python中用于正则表达式的库是？',
+          options: ['re', 'regex', 'string', 'text'],
+          answer: 're',
+          explanation: 're是Python的正则表达式库，用于文本模式匹配和处理。'
+        },
+        {
+          question: '将字符串转换为小写的方法是？',
+          options: ['str.lower()', 'str.small()', 'str.min()', 'str.down()'],
+          answer: 'str.lower()',
+          explanation: 'str.lower()方法将字符串中的所有字符转换为小写。'
+        }
+      ]
+    }
   },
   {
     id: 9,
@@ -670,7 +950,41 @@ print("\n数据预处理完成，可以开始训练模型！")`,
 编码映射: {'否': 0, '是': 1}
 
 数据预处理完成，可以开始训练模型！`,
-    explanation: '机器学习的数据预处理决定了模型效果的上限，本项目展示了完整的数据准备流程。'
+    explanation: '机器学习的数据预处理决定了模型效果的上限，本项目展示了完整的数据准备流程。',
+    quiz: {
+      questions: [
+        {
+          question: 'sklearn中划分训练集和测试集的函数是？',
+          options: ['train_test_split()', 'split_data()', 'divide_data()', 'separate()'],
+          answer: 'train_test_split()',
+          explanation: 'train_test_split()用于将数据集划分为训练集和测试集，是机器学习的标准做法。'
+        },
+        {
+          question: '将标签编码为数值的类是？',
+          options: ['LabelEncoder', 'OneHotEncoder', 'OrdinalEncoder', 'CategoryEncoder'],
+          answer: 'LabelEncoder',
+          explanation: 'LabelEncoder用于将分类标签转换为连续的数值。'
+        },
+        {
+          question: 'fit_transform()和transform()的区别是？',
+          options: ['fit_transform()学习并转换，transform()只转换', '没有区别', 'fit_transform()只学习参数', 'transform()只用于测试集'],
+          answer: 'fit_transform()学习并转换，transform()只转换',
+          explanation: 'fit_transform()会先学习数据的统计参数再进行转换，而transform()只使用已学习的参数进行转换。'
+        },
+        {
+          question: '测试集数据应该如何标准化？',
+          options: ['使用训练集的transform()', '使用测试集自己的fit_transform()', '不需要缩放', '重新拟合整个数据集'],
+          answer: '使用训练集的transform()',
+          explanation: '测试集应该使用训练集学习到的参数进行transform()，以避免数据泄露。'
+        },
+        {
+          question: '数据预处理的第一步通常是？',
+          options: ['数据探索', '特征工程', '数据清洗', '特征选择'],
+          answer: '数据探索',
+          explanation: '数据预处理通常从数据探索开始，了解数据的基本情况和特点。'
+        }
+      ]
+    }
   },
   {
     id: 10,
@@ -782,6 +1096,40 @@ print("=" * 60)`,
 ============================================================
 分析完成！
 ============================================================`,
-    explanation: '这是一个综合性的数据分析项目，涵盖了前面所有课程所学的知识点，是最好的实战练习。'
+    explanation: '这是一个综合性的数据分析项目，涵盖了前面所有课程所学的知识点，是最好的实战练习。',
+    quiz: {
+      questions: [
+        {
+          question: '查看数据集基本信息的方法是？',
+          options: ['df.info()', 'df.describe()', 'df.head()', 'df.summary()'],
+          answer: 'df.info()',
+          explanation: 'df.info()方法显示数据框的基本信息，包括列名、非空值数量、数据类型等。'
+        },
+        {
+          question: '计算字段总和的聚合函数是？',
+          options: ['sum()', 'total()', 'add()', 'count()'],
+          answer: 'sum()',
+          explanation: 'sum()是最常用的聚合函数之一，用于计算字段的总和。'
+        },
+        {
+          question: '排序数据的方法是？',
+          options: ['df.sort_values()', 'df.order()', 'df.arrange()', 'df.sort()'],
+          answer: 'df.sort_values()',
+          explanation: 'df.sort_values()用于按指定列的值排序DataFrame。'
+        },
+        {
+          question: '完整的数据分析流程第一步通常是？',
+          options: ['数据探索', '数据建模', '数据可视化', '报告撰写'],
+          answer: '数据探索',
+          explanation: '完整的数据分析流程通常从数据探索开始，了解数据的基本情况。'
+        },
+        {
+          question: '查找最大值的方法是？',
+          options: ['idxmax()', 'max()', 'argmax()', 'maximum()'],
+          answer: 'idxmax()',
+          explanation: 'idxmax()用于找到最大值所在的索引或标签。'
+        }
+      ]
+    }
   }
 ];
