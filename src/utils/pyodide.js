@@ -33,6 +33,7 @@ class PyodideRunner {
 
     try {
       let output = '';
+      let stderrOutput = '';
       
       // 设置stdout和stderr
       this.pyodide.setStdout({
@@ -43,7 +44,7 @@ class PyodideRunner {
       
       this.pyodide.setStderr({
         batched: (text) => {
-          output += text;
+          stderrOutput += text;
         }
       });
 
@@ -53,15 +54,20 @@ class PyodideRunner {
       return { success: true, result: output || '代码执行完成，无输出' };
     } catch (error) {
       console.error('执行错误:', error);
+      console.error('stderr输出:', stderrOutput);
       
-      // 提取有用的错误信息
-      let errorMsg = '';
-      if (error.message) {
-        errorMsg = error.message;
-      } else if (typeof error === 'string') {
-        errorMsg = error;
-      } else {
-        errorMsg = String(error);
+      // 使用stderr输出作为主要错误信息
+      let errorMsg = stderrOutput;
+      
+      // 如果stderr为空，使用error对象
+      if (!errorMsg || errorMsg.trim() === '') {
+        if (error.message) {
+          errorMsg = error.message;
+        } else if (typeof error === 'string') {
+          errorMsg = error;
+        } else {
+          errorMsg = String(error);
+        }
       }
       
       // 只保留真正的Python错误信息
@@ -76,8 +82,14 @@ class PyodideRunner {
         // 跳过空行
         if (!trimmed) continue;
         
+        // 跳过Traceback开头
+        if (trimmed === 'Traceback (most recent call last):') {
+          inTraceback = true;
+          continue;
+        }
+        
         // 只保留用户代码相关的错误信息
-        // 1. Error/Exception 类型
+        // 1. Error/Exception 类型 - 优先保留
         if (trimmed.match(/Error|Exception/)) {
           errorLines.push(trimmed);
           continue;
