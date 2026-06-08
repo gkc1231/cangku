@@ -65,45 +65,57 @@ class PyodideRunner {
       }
       
       // 只保留真正的Python错误信息
-      let cleanError = errorMsg;
-      
-      // 查找最后的实际Python错误行（通常以Error或Exception结尾）
       const lines = errorMsg.split('\n');
       
-      // 查找包含实际错误信息的行
-      const errorLines = lines.filter(line => {
+      const errorLines = [];
+      let inTraceback = false;
+      
+      for (const line of lines) {
         const trimmed = line.trim();
-        // 保留包含Python错误类型的行
-        if (trimmed.match(/Error|Exception|SyntaxError|IndentationError|NameError|TypeError|ValueError|AttributeError|KeyError|IndexError/)) {
-          return true;
+        
+        // 跳过空行
+        if (!trimmed) continue;
+        
+        // 只保留用户代码相关的错误信息
+        // 1. Error/Exception 类型
+        if (trimmed.match(/Error|Exception/)) {
+          errorLines.push(trimmed);
+          continue;
         }
-        // 保留显示文件和行号的行（Python Traceback格式）
-        if (trimmed.startsWith('File ') || trimmed.match(/line \d+/)) {
-          return true;
+        
+        // 2. 用户代码的文件位置（File "<exec>", line ...）
+        if (trimmed.startsWith('File "<exec>"')) {
+          errorLines.push(trimmed);
+          inTraceback = true;
+          continue;
         }
-        // 保留空行用于格式化
-        if (trimmed === '') {
-          return true;
+        
+        // 3. 如果在追踪中，保留用户代码的具体行（非pyodide内部）
+        if (inTraceback) {
+          // 跳过pyodide内部文件
+          if (line.includes('lib/python') || line.includes('_pyodide') || line.includes('pyodide')) {
+            continue;
+          }
+          
+          // 保留用户代码的内容行和^指向的行
+          if (trimmed && !trimmed.startsWith('File ')) {
+            errorLines.push(line);
+          }
         }
-        // 过滤掉Pyodide内部行
-        return !line.includes('pyodide') && 
-               !line.includes('https://') && 
-               !line.includes('CodeRunner') &&
-               !line.includes('self.ast') &&
-               !line.includes('compile(source') &&
-               !line.match(/^await|^source|^optimize|^\^+$/) &&
-               !line.includes('<5 lines>') &&
-               !line.includes('next(self._gen)');
-      });
-      
-      cleanError = errorLines.join('\n').trim();
-      
-      // 如果清理后还是很长，只保留最后几行（真正的错误信息）
-      if (cleanError.length > 500) {
-        const finalLines = cleanError.split('\n');
-        const importantLines = finalLines.slice(Math.max(0, finalLines.length - 10));
-        cleanError = importantLines.join('\n').trim();
       }
+      
+      // 如果没有提取到错误，尝试更简单的方法
+      if (errorLines.length === 0) {
+        // 直接找包含Error或Exception的行
+        for (const line of lines) {
+          if (line.match(/Error|Exception/)) {
+            errorLines.push(line.trim());
+            break;
+          }
+        }
+      }
+      
+      let cleanError = errorLines.join('\n').trim();
       
       return { success: false, error: cleanError || '代码执行出错，请检查语法' };
     }
