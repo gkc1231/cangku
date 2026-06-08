@@ -12,48 +12,35 @@ class PyodideRunner {
     }
 
     try {
+      console.log('Loading Pyodide...');
       this.pyodide = await loadPyodide({
         indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/",
+        stdout: (text) => console.log(text),
+        stderr: (text) => console.error(text),
       });
 
-      // 加载必要的包
-      await this.pyodide.loadPackage(["pandas", "numpy", "plotly"]);
+      console.log('Loading packages...');
+      await this.pyodide.loadPackage(["pandas", "numpy"]);
       
-      // 配置plotly以在浏览器中显示
+      console.log('Configuring environment...');
       this.pyodide.runPython(`
-        import plotly
-        import plotly.express as px
-        import plotly.graph_objects as go
-        from plotly.subplots import make_subplots
+        import pandas as pd
+        import numpy as np
         
-        # 配置plotly在浏览器中显示
-        def show(fig):
-            import json
-            from js import document, Plotly
-            
-            # 创建一个临时div元素
-            div = document.createElement('div')
-            div.id = 'plotly-plot-' + str(id(fig))
-            div.style.width = '100%'
-            div.style.height = '400px'
-            document.getElementById('results').appendChild(div)
-            
-            # 将图表转换为JSON
-            fig_json = fig.to_json()
-            
-            # 使用Plotly.js显示图表
-            Plotly.newPlot(div.id, JSON.parse(fig_json)['data'], JSON.parse(fig_json)['layout'])
+        # 创建一个全局变量用于存储输出
+        output_buffer = []
         
-        # 替换plotly的show方法
-        px.scatter.show = show
-        px.bar.show = show
-        px.line.show = show
-        px.box.show = show
-        px.violin.show = show
-        px.pie.show = show
-        px.imshow.show = show
-        px.scatter_matrix.show = show
-        go.Figure.show = show
+        # 自定义print函数
+        def custom_print(*args, sep=' ', end='\\n'):
+            output = sep.join(str(arg) for arg in args) + end
+            output_buffer.append(output)
+            # 也输出到浏览器控制台
+            from js import console
+            console.log(output)
+        
+        # 替换内置print
+        import builtins
+        builtins.print = custom_print
       `);
 
       this.isInitialized = true;
@@ -76,22 +63,20 @@ class PyodideRunner {
         resultsDiv.innerHTML = '';
       }
 
-      // 重定向print输出到控制台
+      // 清空输出缓冲区
       this.pyodide.runPython(`
-        import sys
-        from js import console
-        
-        class ConsoleWriter:
-            def write(self, text):
-                console.log(text)
-        
-        sys.stdout = ConsoleWriter()
-        sys.stderr = ConsoleWriter()
+        output_buffer.clear()
       `);
 
       // 执行用户代码
-      const result = await this.pyodide.runPythonAsync(code);
-      return { success: true, result };
+      await this.pyodide.runPythonAsync(code);
+      
+      // 获取输出
+      const output = await this.pyodide.runPythonAsync(`
+        ''.join(output_buffer)
+      `);
+      
+      return { success: true, result: output };
     } catch (error) {
       console.error('Error running code:', error);
       return { success: false, error: error.message };
@@ -104,7 +89,6 @@ class PyodideRunner {
     }
 
     try {
-      // 使用Pyodide的fetch能力加载CSV
       const result = await this.pyodide.runPythonAsync(`
         import pandas as pd
         df = pd.read_csv('${url}')
@@ -118,6 +102,5 @@ class PyodideRunner {
   }
 }
 
-// 导出单例实例
 export const pyodideRunner = new PyodideRunner();
 export default PyodideRunner;

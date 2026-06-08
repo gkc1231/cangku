@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projects } from '../data/projects';
-import { ArrowLeft, Play, BookOpen, Lightbulb, CheckCircle2, XCircle, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Play, BookOpen, Lightbulb, CheckCircle2, XCircle, HelpCircle, Terminal } from 'lucide-react';
+import { pyodideRunner } from '../utils/pyodide';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [showOutput, setShowOutput] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
+  const [output, setOutput] = useState<string>('');
+  const resultsRef = useRef<HTMLDivElement>(null);
   
   const project = projects.find(p => p.id === parseInt(id || '1'));
 
@@ -33,12 +37,43 @@ const ProjectDetail = () => {
     );
   }
 
-  const handleRunCode = () => {
+  const handleRunCode = async () => {
+    if (isRunning || isInitializing) return;
+    
     setIsRunning(true);
-    setTimeout(() => {
+    setShowOutput(true);
+    setOutput('');
+    
+    try {
+      // 初始化Pyodide
+      if (!pyodideRunner.isInitialized) {
+        setIsInitializing(true);
+        setOutput('正在初始化Python环境...\n');
+        await pyodideRunner.initialize();
+        setIsInitializing(false);
+        setOutput('Python环境初始化完成！\n\n');
+      }
+      
+      setOutput(prev => prev + '正在执行代码...\n\n');
+      
+      // 创建结果容器
+      if (resultsRef.current) {
+        resultsRef.current.innerHTML = '';
+      }
+      
+      // 执行代码
+      const codeResult = await pyodideRunner.runCode(project.code);
+      
+      if (codeResult.success) {
+        setOutput(codeResult.result || '执行完成！');
+      } else {
+        setOutput('执行错误: ' + codeResult.error);
+      }
+    } catch (error) {
+      setOutput('错误: ' + error.message);
+    } finally {
       setIsRunning(false);
-      setShowOutput(true);
-    }, 1500);
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -181,20 +216,31 @@ const ProjectDetail = () => {
             {/* 输出结果 */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gray-100 px-6 py-4 border-b">
-                <h3 className="font-bold text-gray-900">输出结果</h3>
+                <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                  <Terminal className="w-5 h-5 text-gray-600" />
+                  输出结果
+                </h3>
               </div>
               
               <div className="p-6">
                 {showOutput ? (
-                  <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                    <pre className="text-green-400 font-mono text-sm leading-relaxed whitespace-pre">
-                      {project.sampleOutput}
-                    </pre>
+                  <div>
+                    <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto max-h-80 overflow-y-auto">
+                      <pre className="text-green-400 font-mono text-sm leading-relaxed whitespace-pre">
+                        {output || '执行中...'}
+                      </pre>
+                    </div>
+                    <div 
+                      ref={resultsRef} 
+                      id="results" 
+                      className="mt-4 space-y-4"
+                    ></div>
                   </div>
                 ) : (
                   <div className="text-center py-12 text-gray-400">
                     <Play className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>点击"运行代码"查看输出结果</p>
+                    <p className="text-sm mt-2 text-gray-500">首次运行需要加载Python环境，可能需要稍等片刻</p>
                   </div>
                 )}
               </div>
