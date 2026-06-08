@@ -34,7 +34,7 @@ class PyodideRunner {
     try {
       let output = '';
       
-      // 设置stdout
+      // 设置stdout和stderr
       this.pyodide.setStdout({
         batched: (text) => {
           output += text;
@@ -47,18 +47,37 @@ class PyodideRunner {
         }
       });
 
-      // 直接执行代码
+      // 执行代码
       await this.pyodide.runPythonAsync(code);
       
-      return { success: true, result: output };
+      return { success: true, result: output || '代码执行完成，无输出' };
     } catch (error) {
       console.error('执行错误:', error);
-      let errorMsg = error.message;
-      // 如果是完整的错误堆栈，取前几行
-      if (error.stack) {
-        errorMsg = error.stack;
+      
+      // 提取有用的错误信息
+      let errorMsg = '';
+      if (error.message) {
+        errorMsg = error.message;
+      } else if (typeof error === 'string') {
+        errorMsg = error;
+      } else {
+        errorMsg = String(error);
       }
-      return { success: false, error: errorMsg };
+      
+      // 如果错误信息包含Traceback，只保留Python的错误部分
+      if (errorMsg.includes('Traceback')) {
+        const tracebackLines = errorMsg.split('\n');
+        const pythonError = tracebackLines.filter(line => 
+          !line.includes('pyodide') && 
+          !line.includes('https://') &&
+          line.trim() !== ''
+        ).join('\n');
+        if (pythonError) {
+          errorMsg = pythonError;
+        }
+      }
+      
+      return { success: false, error: errorMsg || '执行错误' };
     }
   }
 
