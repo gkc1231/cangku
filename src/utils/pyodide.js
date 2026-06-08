@@ -13,7 +13,7 @@ class PyodideRunner {
 
     try {
       this.pyodide = await loadPyodide({
-        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.29.3/full/"
       });
 
       await this.pyodide.loadPackage(["pandas", "numpy"]);
