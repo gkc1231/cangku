@@ -1,15 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<<<<<<< HEAD
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pandas数据分析实战 - 从入门到进阶</title>
+    <title>Pandas数据分析实战 - 郭楷纯</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+              display: ['Poppins', 'Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
     <!-- Plotly.js CDN -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   </head>
@@ -17,263 +31,4 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
-=======
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>郭楷纯 - 个人课程页面</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 自定义Tailwind配置 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3b82f6',
-                        secondary: '#f3f4f6',
-                        dark: '#374151',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <!-- 自定义样式 -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="bg-gray-50 font-sans">
-    <!-- 导航栏 -->
-    <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="text-primary font-bold text-xl">🐼 学员：郭楷纯</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="text-dark hover:text-primary transition-colors">关于我</a>
-                <a href="#courses" class="text-dark hover:text-primary transition-colors">课程</a>
-                <a href="#pandas" class="text-dark hover:text-primary transition-colors">Pandas学习</a>
-            </div>
-            <button class="md:hidden text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- 首页内容 -->
-    <main class="container mx-auto px-4 pt-24 pb-12">
-        <!-- 个人信息区 -->
-        <section id="about" class="mb-16 text-center">
-            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl p-8 shadow-lg mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">👋 你好，我是郭楷纯</h1>
-                <p class="text-xl mb-4">广东科学技术职业学院 · 商学院</p>
-                <p class="text-lg opacity-90">商务数据分析与应用专业 学生</p>
-                <div class="w-24 h-1 bg-white/50 mx-auto mt-6 rounded-full"></div>
-            </div>
-            
-            <div class="max-w-3xl mx-auto">
-                <p class="text-lg text-gray-600 leading-relaxed">
-                    我是商务数据分析与应用专业的学生，对数据分析和处理技术充满兴趣。
-                    这里展示了我所学的主要课程信息和学习成果，包括Python基础、数据分析技术、Pandas实战等。
-                    希望通过学习和实践，掌握更多的数据分析技能，为未来的职业发展打下坚实的基础。
-                </p>
-            </div>
-        </section>
-
-        <!-- 统计信息 -->
-        <section class="mb-16">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <div class="text-4xl font-bold text-primary mb-2">6+</div>
-                    <div class="text-gray-600">课程学习</div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <div class="text-4xl font-bold text-primary mb-2">10+</div>
-                    <div class="text-gray-600">实战项目</div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <div class="text-4xl font-bold text-primary mb-2">∞</div>
-                    <div class="text-gray-600">学习热情</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pandas学习平台 -->
-        <section id="pandas" class="mb-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">🐼 Pandas 数据分析实战平台</h2>
-                <p class="text-xl text-gray-600 mb-6">从零开始，掌握数据分析核心技能</p>
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">10个精选实战项目</span>
-                    <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">从入门到进阶</span>
-                    <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">浏览器运行</span>
-                </div>
-                <div class="flex justify-center gap-4">
-                    <a href="#courses" class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                        开始学习
-                    </a>
-                    <a href="#courses" class="bg-white hover:bg-gray-100 text-dark px-8 py-3 rounded-lg font-medium border border-gray-300 transition-colors">
-                        学习资源
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 课程列表 -->
-        <section id="courses" class="mb-16">
-            <h2 class="text-3xl font-bold text-dark mb-8 text-center">📚 我的课程</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 课程卡片 1 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">入门</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">Python基础</h3>
-                        <p class="text-gray-600 mb-4">
-                            学习Python编程语言的基本语法、数据类型、控制结构和函数等基础知识。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-
-                <!-- 课程卡片 2 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">入门</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">数据分析技术</h3>
-                        <p class="text-gray-600 mb-4">
-                            学习数据分析的基本概念、方法和工具，包括数据清洗、可视化、统计等。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-
-                <!-- 课程卡片 3 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">中级</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">数据采集与处理</h3>
-                        <p class="text-gray-600 mb-4">
-                            学习如何从各种数据源采集数据，以及数据的清洗、转换和存储操作。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-
-                <!-- 课程卡片 4 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">中级</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">供应链数据分析</h3>
-                        <p class="text-gray-600 mb-4">
-                            应用数据分析技术优化供应链管理，包括需求预测、库存管理、物流优化等。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-
-                <!-- 课程卡片 5 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">入门</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">数据库原理与应用</h3>
-                        <p class="text-gray-600 mb-4">
-                            学习数据库的基本原理、SQL语言、数据库设计和管理等知识。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-
-                <!-- 课程卡片 6 -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden course-card">
-                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 text-white">
-                        <div class="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">高级</span>
-                        <h3 class="text-xl font-semibold text-dark mt-3 mb-2">数据可视化</h3>
-                        <p class="text-gray-600 mb-4">
-                            学习如何使用各种工具和技术将数据转化为直观的可视化图表。
-                        </p>
-                        <a href="#" class="text-primary hover:underline font-medium">查看详情 →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 为什么选择学习 -->
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-dark mb-8 text-center">✨ 学习优势</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-md p-6 text-center">
-                    <div class="text-4xl mb-4">💻</div>
-                    <h3 class="text-xl font-semibold text-dark mb-2">浏览器中运行</h3>
-                    <p class="text-gray-600">无需安装Python环境，直接在浏览器中运行和修改代码</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 text-center">
-                    <div class="text-4xl mb-4">📊</div>
-                    <h3 class="text-xl font-semibold text-dark mb-2">交互式可视化</h3>
-                    <p class="text-gray-600">使用Plotly创建交互式图表，直观展示数据分析结果</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 text-center">
-                    <div class="text-4xl mb-4">📈</div>
-                    <h3 class="text-xl font-semibold text-dark mb-2">从入门到进阶</h3>
-                    <p class="text-gray-600">多个精心设计的项目，覆盖从基础到高级的数据分析技能</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p class="mb-2">© 2026 郭楷纯 - 广东科学技术职业学院 · 商学院</p>
-            <p class="text-gray-400 text-sm">商务数据分析与应用专业</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="js/script.js"></script>
-</body>
->>>>>>> 588ff6b (更新个人课程页面：添加个人介绍、优化样式、增强交互效果)
 </html>

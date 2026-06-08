@@ -3,82 +3,12 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
   font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  @apply bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50;
-  @apply min-h-screen;
-}
-
-@layer utilities {
-  .glass-effect {
-    @apply bg-white/70 backdrop-blur-md border border-white/30;
-  }
-  
-  .glass-effect-dark {
-    @apply bg-slate-900/70 backdrop-blur-md border border-slate-700/30;
-  }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-accent-500 to-primary-500;
-  }
-  
-  .bg-gradient-hero {
-    @apply bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500;
-  }
-  
-  .card-hover {
-    @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-2xl;
-  }
-  
-  .btn-primary {
-    @apply bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700;
-    @apply text-white font-medium py-3 px-6 rounded-xl shadow-lg;
-    @apply transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
-  }
-  
-  .btn-secondary {
-    @apply bg-white hover:bg-slate-50 text-primary-600 font-medium py-3 px-6 rounded-xl;
-    @apply border border-primary-200 shadow-md transition-all duration-300;
-  }
-  
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-  
-  .animate-delay-1 {
-    animation-delay: 0.1s;
-  }
-  
-  .animate-delay-2 {
-    animation-delay: 0.2s;
-  }
-  
-  .animate-delay-3 {
-    animation-delay: 0.3s;
-  }
-}
-
-@layer components {
-  .hero-shape-1 {
-    @apply absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-400/20 rounded-full blur-3xl;
-  }
-  
-  .hero-shape-2 {
-    @apply absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-accent-400/20 rounded-full blur-3xl;
-  }
 }

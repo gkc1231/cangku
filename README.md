@@ -1,183 +1,57 @@
-<<<<<<< HEAD
-# Pandas数据分析实战项目
+# React + TypeScript + Vite
 
-这是一个包含10个精选Pandas数据分析实战项目的静态网站，从入门到进阶，完全在浏览器中运行代码。
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 功能特点
+Currently, two official plugins are available:
 
-- 📚 10个精选Pandas数据分析项目
-- 🎯 从入门到进阶的难度梯度
-- 💻 完全在浏览器中运行Python代码（使用Pyodide）
-- 🎨 现代化、美观的UI设计
-- 📱 响应式布局，支持移动端
-- 📊 内置数据可视化（使用Plotly）
-- ✏️ 代码编辑器（使用Monaco Editor）
-=======
-# 郭楷纯 - 个人课程页面
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 项目简介
-这是一个静态的个人课程页面，用于广东科学技术职业学院商学院商务数据分析与应用专业学生郭楷纯展示课程信息。页面采用纯HTML、CSS和JavaScript开发，使用Tailwind CSS进行样式设计，与Pandas学习平台风格保持一致。
+## Expanding the ESLint configuration
 
-## 个人介绍
-**郭楷纯**  
-广东科学技术职业学院 · 商学院  
-商务数据分析与应用专业 学生
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 功能特点
-- **个人介绍展示**：醒目的个人信息和学校专业介绍
-- **统计信息展示**：展示课程数量、项目数量等数据
-- **课程列表**：以卡片形式展示多个课程的基本信息
-- **Pandas学习平台**：集成数据分析学习资源
-- **响应式设计**：适配桌面端、平板端和移动端
-- **动画效果**：
-  - 平滑滚动
-  - 悬停效果
-  - 数字计数动画
-  - 滚动进入动画
-- **移动端菜单**：适配移动设备的导航菜单
-- **键盘导航支持**：提升可访问性
->>>>>>> 588ff6b (更新个人课程页面：添加个人介绍、优化样式、增强交互效果)
-
-## 技术栈
-
-- React + TypeScript
-- Pyodide（在浏览器中运行Python）
-- Monaco Editor（代码编辑器）
-- Plotly（数据可视化）
-- Tailwind CSS（样式）
-- Vite（构建工具）
-
-## 部署到Cloudflare Pages
-
-### 方法一：通过Cloudflare Pages仪表板部署
-
-1. 登录到 [Cloudflare Pages](https://pages.cloudflare.com/)
-2. 点击 "Create a project"
-3. 选择你的代码仓库（如果是GitHub或GitLab）
-4. 配置构建设置：
-   - 构建命令：`npm run build`
-   - 构建输出目录：`dist`
-   - 环境变量：无需特殊环境变量
-5. 点击 "Save and Deploy"
-
-### 方法二：通过Wrangler CLI部署
-
-1. 安装Wrangler CLI：
-   ```bash
-   npm install -g wrangler
-   ```
-
-2. 登录到Cloudflare：
-   ```bash
-   wrangler login
-   ```
-
-3. 部署项目：
-   ```bash
-   wrangler pages deploy dist
-   ```
-
-## 本地开发
-
-1. 安装依赖：
-   ```bash
-   npm install
-   ```
-
-2. 启动开发服务器：
-   ```bash
-   npm run dev
-   ```
-
-3. 构建生产版本：
-   ```bash
-   npm run build
-   ```
-
-4. 预览生产构建：
-   ```bash
-   npm run preview
-   ```
-
-## 项目结构
-<<<<<<< HEAD
-
-- `src/data/projects.js` - 包含10个Pandas项目的详细信息
-- `src/utils/pyodide.js` - Pyodide运行器，用于在浏览器中执行Python代码
-- `src/pages/` - 页面组件
-- `src/components/` - 通用组件
-- `src/styles/` - 样式文件
-
-## 项目列表
-
-1. **数据导入与基础处理** - 入门级
-2. **数据清洗与预处理** - 入门级
-3. **数据筛选与查询** - 入门级
-4. **数据分组与聚合** - 中级
-5. **数据合并与连接** - 中级
-6. **时间序列分析** - 中级
-7. **数据可视化** - 中级
-8. **高级数据转换** - 高级
-9. **性能优化** - 高级
-10. **综合项目实战** - 高级
-
-## 注意事项
-
-- 首次加载时会下载Pyodide运行时，可能需要一些时间
-- 浏览器需要支持WebAssembly
-- 大型数据集可能会受到浏览器内存限制
-=======
-```
-/
-├── index.html          # 首页（包含个人介绍和课程列表）
-├── css/                # 样式文件
-│   └── style.css       # 自定义样式和动画
-├── js/                 # JavaScript文件
-│   └── script.js       # 交互逻辑和动画控制
-└── README.md           # 项目说明
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-## 主要课程
-1. **Python基础** - 学习Python编程语言的基本语法
-2. **数据分析技术** - 学习数据分析的基本概念和方法
-3. **数据采集与处理** - 学习数据采集、清洗、转换和存储
-4. **供应链数据分析** - 应用数据分析优化供应链管理
-5. **数据库原理与应用** - 学习数据库设计和SQL语言
-6. **数据可视化** - 学习数据可视化技术和工具
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 部署指南
-### Cloudflare Pages部署
-1. 在GitHub或GitLab上创建一个新的仓库
-2. 将项目文件上传到仓库
-3. 登录Cloudflare Pages控制台
-4. 点击"创建项目"
-5. 选择您的GitHub仓库
-6. 配置构建设置：
-   - 构建命令：无需构建（留空）
-   - 构建输出目录：/（根目录）
-7. 点击"部署站点"
-8. 等待部署完成，获取部署URL
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-### 手动部署
-由于是纯静态页面，您也可以直接上传文件到Cloudflare Pages：
-1. 登录Cloudflare Dashboard
-2. 进入Pages应用
-3. 点击"创建项目"
-4. 选择"直接上传"
-5. 拖拽或选择项目文件
-6. 部署完成
-
-## 后续计划
-- 补充各个课程的详细内容，包括课程大纲、学习资源和实践项目
-- 添加更多交互功能，如课程详情页面
-- 优化页面性能和SEO
-- 添加更多个性化内容和项目展示
-- 集成更多的数据分析学习资源
-
-## 联系方式
-- 学生：郭楷纯
-- 学校：广东科学技术职业学院
-- 专业：商学院 · 商务数据分析与应用
-
-© 2026 郭楷纯 - 广东科学技术职业学院 · 商学院
->>>>>>> 588ff6b (更新个人课程页面：添加个人介绍、优化样式、增强交互效果)
+export default tseslint.config({
+  extends: [
+    // other configs...
+    // Enable lint rules for React
+    reactX.configs['recommended-typescript'],
+    // Enable lint rules for React DOM
+    reactDom.configs.recommended,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
