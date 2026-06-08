@@ -14,9 +14,17 @@ const ProjectDetail = () => {
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [output, setOutput] = useState<string>('');
+  const [practiceCode, setPracticeCode] = useState<string>('');
   const resultsRef = useRef<HTMLDivElement>(null);
   
   const project = projects.find(p => p.id === parseInt(id || '1'));
+  
+  // 初始化练习代码
+  useEffect(() => {
+    if (project) {
+      setPracticeCode(project.code);
+    }
+  }, [project]);
 
   useEffect(() => {
     if (project) {
@@ -48,7 +56,7 @@ const ProjectDetail = () => {
       await pyodideRunner.initialize();
       setOutput('Python环境加载成功！正在执行代码...\n\n');
       
-      const result = await pyodideRunner.runCode(project.code);
+      const result = await pyodideRunner.runCode(practiceCode);
       
       if (result.success) {
         setOutput(result.result || '执行完成！');
@@ -59,6 +67,12 @@ const ProjectDetail = () => {
       setOutput('错误: ' + (error as Error).message);
     } finally {
       setIsRunning(false);
+    }
+  };
+
+  const handleResetCode = () => {
+    if (project) {
+      setPracticeCode(project.code);
     }
   };
 
@@ -144,19 +158,31 @@ const ProjectDetail = () => {
                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
-              <span className="text-gray-400 text-sm">Python</span>
+              <span className="text-gray-400 text-sm">Python - 练习区</span>
             </div>
             
-            <div className="bg-gray-800 p-6 overflow-x-auto">
-              <pre className="text-gray-100 font-mono text-sm leading-relaxed whitespace-pre">
-                {project.code}
-              </pre>
+            <div className="bg-gray-800 p-0">
+              <textarea
+                value={practiceCode}
+                onChange={(e) => setPracticeCode(e.target.value)}
+                className="w-full bg-gray-800 text-gray-100 font-mono text-sm leading-relaxed p-6 resize-y min-h-[300px] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                spellCheck={false}
+                placeholder="# 在这里编写你的Python代码..."
+              />
             </div>
             
             <div className="bg-gray-50 px-6 py-4 flex items-center justify-between border-t">
-              <div className="flex items-center gap-2 text-gray-600">
-                <BookOpen className="w-4 h-4" />
-                <span className="text-sm">{project.code.split('\n').length} 行代码</span>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleResetCode}
+                  className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center gap-1 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  重置代码
+                </button>
+                <span className="text-gray-500 text-sm">
+                  {practiceCode.split('\n').length} 行代码
+                </span>
               </div>
               
               <button
