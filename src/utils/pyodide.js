@@ -64,20 +64,48 @@ class PyodideRunner {
         errorMsg = String(error);
       }
       
-      // 如果错误信息包含Traceback，只保留Python的错误部分
-      if (errorMsg.includes('Traceback')) {
-        const tracebackLines = errorMsg.split('\n');
-        const pythonError = tracebackLines.filter(line => 
-          !line.includes('pyodide') && 
-          !line.includes('https://') &&
-          line.trim() !== ''
-        ).join('\n');
-        if (pythonError) {
-          errorMsg = pythonError;
+      // 只保留真正的Python错误信息
+      let cleanError = errorMsg;
+      
+      // 查找最后的实际Python错误行（通常以Error或Exception结尾）
+      const lines = errorMsg.split('\n');
+      
+      // 查找包含实际错误信息的行
+      const errorLines = lines.filter(line => {
+        const trimmed = line.trim();
+        // 保留包含Python错误类型的行
+        if (trimmed.match(/Error|Exception|SyntaxError|IndentationError|NameError|TypeError|ValueError|AttributeError|KeyError|IndexError/)) {
+          return true;
         }
+        // 保留显示文件和行号的行（Python Traceback格式）
+        if (trimmed.startsWith('File ') || trimmed.match(/line \d+/)) {
+          return true;
+        }
+        // 保留空行用于格式化
+        if (trimmed === '') {
+          return true;
+        }
+        // 过滤掉Pyodide内部行
+        return !line.includes('pyodide') && 
+               !line.includes('https://') && 
+               !line.includes('CodeRunner') &&
+               !line.includes('self.ast') &&
+               !line.includes('compile(source') &&
+               !line.match(/^await|^source|^optimize|^\^+$/) &&
+               !line.includes('<5 lines>') &&
+               !line.includes('next(self._gen)');
+      });
+      
+      cleanError = errorLines.join('\n').trim();
+      
+      // 如果清理后还是很长，只保留最后几行（真正的错误信息）
+      if (cleanError.length > 500) {
+        const finalLines = cleanError.split('\n');
+        const importantLines = finalLines.slice(Math.max(0, finalLines.length - 10));
+        cleanError = importantLines.join('\n').trim();
       }
       
-      return { success: false, error: errorMsg || '执行错误' };
+      return { success: false, error: cleanError || '代码执行出错，请检查语法' };
     }
   }
 
