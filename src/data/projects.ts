@@ -3,7 +3,8 @@ export interface Project {
   title: string;
   description: string;
   difficulty: '入门' | '中级' | '高级';
-  concepts: string[];
+  concepts?: string[];
+  objectives?: string[];
   code: string;
   sampleOutput: string;
   explanation: string;

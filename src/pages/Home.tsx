@@ -138,7 +138,7 @@ const Home = () => {
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {project.concepts.slice(0, 3).map((concept, index) => (
+                    {(project.concepts || project.objectives || []).slice(0, 3).map((concept, index) => (
                       <span
                         key={index}
                         className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-sm"
@@ -153,7 +153,7 @@ const Home = () => {
                       开始学习 →
                     </span>
                     <span className="text-gray-400 text-sm">
-                      {project.concepts.length} 个知识点
+                      {(project.concepts || project.objectives || []).length} 个知识点
                     </span>
                   </div>
                 </div>
