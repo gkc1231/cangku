@@ -1,57 +1,117 @@
-# React + TypeScript + Vite
+# 🐼 Pandas 数据分析实战平台
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 由 **郭楷纯** 创建 - 广东科学技术职业学院 · 商学院 · 商务数据分析与应用专业
 
-Currently, two official plugins are available:
+一个包含 **10个精选实战项目** 的 Pandas 数据分析学习平台，从入门到进阶，完全在浏览器中运行代码。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ 功能特点
 
-## Expanding the ESLint configuration
+- 📚 **10个精选项目**：从基础数据读取到高级机器学习数据预处理
+- 🎯 **从入门到进阶**：3个难度等级（入门、中级、高级）
+- 💻 **浏览器运行**：无需安装 Python 环境，直接在浏览器中运行代码
+- 🎨 **现代化UI**：美观专业的界面设计，流畅的用户体验
+- 📊 **交互式可视化**：使用 Plotly 创建交互式图表
+- 🔧 **代码编辑器**：功能完整的代码编辑器，支持语法高亮
+- 📱 **响应式设计**：完美适配桌面端和移动端
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 开始使用
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 在线访问
+
+项目已部署到 Cloudflare Pages，可以直接访问：
+- **网站地址**: [https://b39264e9.cangku-9pq.pages.dev/](https://b39264e9.cangku-9pq.pages.dev/)
+
+### 本地运行
+
+```bash
+# 克隆仓库
+git clone https://github.com/gkc1231/cangku.git
+
+# 进入目录
+cd cangku
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 打开浏览器访问 http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 构建部署
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 构建生产版本
+npm run build
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# 预览构建结果
+npm run preview
 ```
+
+## 📚 项目列表
+
+### 入门级项目
+
+1. **基础数据读取与探索** - 学习如何使用pandas读取CSV文件并进行基本的数据探索
+2. **数据清洗与预处理** - 学习如何处理缺失值、重复值和异常值
+3. **数据分组与聚合** - 学习如何使用groupby进行数据分组和聚合操作
+
+### 中级项目
+
+4. **时间序列分析** - 学习如何处理和分析时间序列数据
+5. **数据合并与连接** - 学习如何合并和连接不同的数据集
+6. **高级数据可视化** - 学习如何创建复杂和交互式的数据可视化
+7. **特征工程与特征选择** - 学习如何创建和选择有意义的特征
+
+### 高级项目
+
+8. **文本数据处理** - 学习如何处理和分析文本数据
+9. **机器学习数据预处理** - 学习如何为机器学习模型准备数据
+10. **综合数据分析项目** - 综合运用pandas进行完整的数据分析项目
+
+## 🛠️ 技术栈
+
+- **前端框架**: React 18 + TypeScript
+- **构建工具**: Vite
+- **样式框架**: Tailwind CSS
+- **代码编辑器**: Monaco Editor
+- **数据可视化**: Plotly.js
+- **路由**: React Router
+- **状态管理**: Zustand
+- **图标**: Lucide React
+- **部署平台**: Cloudflare Pages
+
+## 🎓 学习路径
+
+建议按照项目编号顺序学习，每个项目都包含：
+
+- 📖 **项目描述**：清晰的学习目标和内容概述
+- 💻 **示例代码**：完整的、可运行的代码示例
+- 📊 **示例输出**：代码运行后的预期结果
+- 🎯 **学习要点**：需要掌握的核心概念和方法
+- 💡 **项目说明**：项目的背景和应用场景
+
+## 👨‍💻 关于作者
+
+**郭楷纯**  
+广东科学技术职业学院 · 商学院  
+商务数据分析与应用专业 · 学生
+
+热爱数据分析，致力于通过实践项目提升技能，欢迎交流学习！
+
+## 📄 许可证
+
+本项目仅供学习和教育目的使用。
+
+## 🙏 致谢
+
+- [Pandas](https://pandas.pydata.org/) - 强大的数据分析库
+- [Tailwind CSS](https://tailwindcss.com/) - 美观的样式框架
+- [React](https://react.dev/) - 用户界面框架
+- [Cloudflare Pages](https://pages.cloudflare.com/) - 静态网站托管平台
+
+---
+
+**© 2026 郭楷纯 - 广东科学技术职业学院 · 商学院**  
+**Made with ❤️ for data science learners**
