@@ -71,15 +71,17 @@ class PyodideRunner {
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         
-        // 跳过空行和pyodide内部信息
-        if (!line || line.includes('pyodide') || line.includes('lib/python')) {
+        // 跳过空行、pyodide内部信息、以及只包含^或~的行
+        if (!line || 
+            line.includes('pyodide') || 
+            line.includes('lib/python') ||
+            line.match(/^[\^~]+$/)) {
           continue;
         }
         
-        // 保留用户代码位置、错误类型、和^指向的行
+        // 保留用户代码位置和错误类型
         if (line.startsWith('File "<exec>"') || 
-            line.match(/Error|Exception/) ||
-            line.match(/^\^+$/)) {
+            line.match(/Error|Exception/)) {
           errorLines.push(line);
           continue;
         }
