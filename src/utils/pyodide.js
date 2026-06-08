@@ -20,23 +20,32 @@ class PyodideRunner {
       });
 
       console.log('Loading packages...');
-      await this.pyodide.loadPackage(["pandas", "numpy"]);
+      await this.pyodide.loadPackage(["pandas", "numpy", "micropip"]);
       
       console.log('Configuring environment...');
       this.pyodide.runPython(`
+        import sys
+        import io
         import pandas as pd
         import numpy as np
+        
+        # 设置标准输出编码为UTF-8
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
         
         # 创建一个全局变量用于存储输出
         output_buffer = []
         
         # 自定义print函数
         def custom_print(*args, sep=' ', end='\\n'):
-            output = sep.join(str(arg) for arg in args) + end
-            output_buffer.append(output)
-            # 也输出到浏览器控制台
-            from js import console
-            console.log(output)
+            try:
+                output = sep.join(str(arg) for arg in args) + end
+                output_buffer.append(output)
+                # 也输出到浏览器控制台
+                from js import console
+                console.log(output)
+            except Exception as e:
+                output_buffer.append(f"Error in print: {str(e)}\\n")
         
         # 替换内置print
         import builtins
@@ -69,14 +78,14 @@ class PyodideRunner {
       `);
 
       // 执行用户代码
-      await this.pyodide.runPythonAsync(code);
+      const result = await this.pyodide.runPythonAsync(code);
       
       // 获取输出
       const output = await this.pyodide.runPythonAsync(`
         ''.join(output_buffer)
       `);
       
-      return { success: true, result: output };
+      return { success: true, result: output || '' };
     } catch (error) {
       console.error('Error running code:', error);
       return { success: false, error: error.message };
