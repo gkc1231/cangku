@@ -137,7 +137,7 @@ const ProjectDetail = () => {
                 学习要点
               </h3>
               <div className="grid grid-cols-2 gap-3">
-                {project.concepts.map((concept, index) => (
+                {(project.concepts || project.objectives || []).map((concept, index) => (
                   <div
                     key={index}
                     className="bg-white rounded-lg px-4 py-3 text-gray-700 font-medium shadow-sm"
