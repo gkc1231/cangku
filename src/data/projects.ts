@@ -24,7 +24,13 @@ export const projects: Project[] = [
     title: '基础数据读取与探索',
     description: '学习如何使用pandas读取CSV文件并进行基本的数据探索',
     difficulty: '入门',
-    concepts: ['pd.read_csv()', 'DataFrame.head()', 'DataFrame.info()', 'DataFrame.describe()'],
+    concepts: [
+      '学习使用pd.read_csv()读取CSV文件',
+      '使用DataFrame.head()查看数据前几行',
+      '通过DataFrame.info()了解数据基本信息',
+      '使用DataFrame.describe()获取数值统计',
+      '掌握DataFrame的基本结构和操作'
+    ],
     code: `import pandas as pd
 
 # 创建示例数据
@@ -116,7 +122,13 @@ max     35.000000  25000.000000`,
     title: '数据清洗与预处理',
     description: '学习如何处理缺失值、重复值和异常值',
     difficulty: '入门',
-    concepts: ['df.isnull()', 'df.dropna()', 'df.fillna()', 'df.drop_duplicates()'],
+    concepts: [
+      '使用df.isnull()检测缺失值',
+      '通过df.dropna()删除缺失值',
+      '掌握df.fillna()填充缺失值的方法',
+      '使用df.drop_duplicates()删除重复值',
+      '学习数据清洗的最佳实践'
+    ],
     code: `import pandas as pd
 import numpy as np
 
@@ -228,7 +240,13 @@ dtype: int64
     title: '数据分组与聚合',
     description: '学习如何使用groupby进行数据分组和聚合操作',
     difficulty: '入门',
-    concepts: ['df.groupby()', 'agg()', 'groupby().sum()', 'groupby().mean()'],
+    concepts: [
+      '使用df.groupby()对数据进行分组',
+      '掌握分组后的聚合操作：sum()、mean()、count()',
+      '学习使用agg()进行多指标聚合',
+      '理解多维度分组的方法',
+      '学会分析分组后的数据结果'
+    ],
     code: `import pandas as pd
 
 # 销售数据
@@ -331,7 +349,13 @@ C    3000.000000  30.00
     title: '时间序列分析',
     description: '学习如何处理和分析时间序列数据',
     difficulty: '中级',
-    concepts: ['pd.to_datetime()', 'resample()', 'rolling()', 'shift()'],
+    concepts: [
+      '使用pd.to_datetime()解析日期字符串',
+      '掌握resample()进行时间序列重采样',
+      '学习rolling()计算移动窗口统计',
+      '使用shift()处理时间序列偏移',
+      '理解时间序列数据的分析方法'
+    ],
     code: `import pandas as pd
 import numpy as np
 
@@ -433,7 +457,13 @@ print(df[['销售额', '增长率']].head(10))`,
     title: '数据合并与连接',
     description: '学习如何合并和连接不同的数据集',
     difficulty: '中级',
-    concepts: ['pd.merge()', 'pd.concat()', 'join()', 'how参数'],
+    concepts: [
+      '使用pd.merge()合并多个数据集',
+      '掌握不同连接类型：inner、left、right、outer',
+      '学习pd.concat()进行数据拼接',
+      '理解join()连接方法的使用场景',
+      '学会处理多表关联数据的技巧'
+    ],
     code: `import pandas as pd
 
 # 学生信息表
@@ -547,7 +577,13 @@ print(outer)`,
     title: '特征工程与特征选择',
     description: '学习如何创建和选择有意义的特征',
     difficulty: '中级',
-    concepts: ['特征创建', '特征缩放', '特征选择', '独热编码'],
+    concepts: [
+      '学习创建新特征的常用方法',
+      '掌握pd.cut()进行数据分箱操作',
+      '使用pd.get_dummies()实现独热编码',
+      '学习StandardScaler进行特征标准化',
+      '理解特征选择的重要性'
+    ],
     code: `import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
@@ -650,7 +686,14 @@ print(df_scaled[numerical_cols])`,
     title: '高级数据可视化',
     description: '学习如何创建复杂和交互式的数据可视化',
     difficulty: '中级',
-    concepts: ['matplotlib', 'seaborn', 'plotly', '图表类型'],
+    concepts: [
+      '学习使用matplotlib创建基本图表',
+      '掌握plt.plot()绘制折线图',
+      '使用plt.bar()绘制柱状图',
+      '学习plt.pie()绘制饼图',
+      '使用plt.scatter()绘制散点图',
+      '理解不同图表类型的适用场景'
+    ],
     code: `import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -756,7 +799,14 @@ print("\n图表已生成！")`,
     title: '文本数据处理',
     description: '学习如何处理和分析文本数据',
     difficulty: '高级',
-    concepts: ['str.contains()', 'str.replace()', 'str.split()', '词频统计'],
+    concepts: [
+      '使用str.contains()检查字符串包含关系',
+      '掌握str.replace()进行字符串替换',
+      '学习str.split()分割字符串',
+      '使用str.len()获取字符串长度',
+      '学习str.count()统计关键词出现次数',
+      '实现简单的文本情感分析'
+    ],
     code: `import pandas as pd
 
 # 产品评论数据
@@ -875,7 +925,14 @@ Name: count, dtype: int64`,
     title: '机器学习数据预处理',
     description: '学习如何为机器学习模型准备数据',
     difficulty: '高级',
-    concepts: ['数据划分', '特征工程', '缺失值处理', '数据转换'],
+    concepts: [
+      '学习数据探索的基本步骤',
+      '使用train_test_split()划分训练集和测试集',
+      '掌握LabelEncoder进行标签编码',
+      '学习StandardScaler进行特征标准化',
+      '理解fit_transform()和transform()的区别',
+      '为机器学习模型准备高质量数据'
+    ],
     code: `import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -991,7 +1048,14 @@ print("\n数据预处理完成，可以开始训练模型！")`,
     title: '综合数据分析项目',
     description: '综合运用pandas进行完整的数据分析项目',
     difficulty: '高级',
-    concepts: ['数据探索', '数据清洗', '特征工程', '分析总结'],
+    concepts: [
+      '综合运用数据读取和探索技能',
+      '熟练进行数据清洗和预处理',
+      '使用groupby进行多维度数据分析',
+      '结合时间序列和特征工程方法',
+      '完成从数据到洞察的完整分析流程',
+      '培养数据分析思维和问题解决能力'
+    ],
     code: `import pandas as pd
 import numpy as np
 
